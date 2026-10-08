@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Book a Service</title>
+
+  <style>
+    :root {
+      --primary: #1769E0;
+      --primary-dark: #0F55BD;
+      --light-blue: #E8F1FF;
+      --background: #F5F8FC;
+      --text: #172033;
+      --muted: #667085;
+      --border: #D9E1EC;
+      --white: #FFFFFF;
+      --success: #16A34A;
+      --danger: #DC2626;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: var(--background);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 30px 16px;
+    }
+
+    .page {
+      max-width: 620px;
+      margin: auto;
+    }
+
+    /* ---------- BRAND ---------- */
+
+    .brand {
+      text-align: center;
+      margin-bottom: 22px;
+    }
+
+    .logo {
+      width: 80px;
+      height: 80px;
+      object-fit: contain;
+      margin-bottom: 10px;
+    }
+
+    .company-name {
+      font-size: 27px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .tagline {
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 15px;
+    }
+
+    .contact-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .contact-btn {
+      text-decoration: none;
+      padding: 9px 15px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      background: var(--light-blue);
+      color: var(--primary);
+    }
+
+    /* ---------- CARD ---------- */
+
+    .card {
+      background: var(--white);
+      border-radius: 18px;
+      padding: 30px;
+      box-shadow: 0 8px 30px rgba(23, 32, 51, 0.08);
+    }
+
+    .form-heading {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    .form-heading h1 {
+      font-size: 26px;
+      margin-bottom: 7px;
+    }
+
+    .form-heading p {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    /* ---------- FORM ---------- */
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 7px;
+    }
+
+    .required {
+      color: var(--danger);
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 13px 14px;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      font-size: 14px;
+      outline: none;
+      background: var(--white);
+      color: var(--text);
+      transition: 0.2s;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(23, 105, 224, 0.10);
+    }
+
+    textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    .two-column {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
+    .submit-btn {
+      width: 100%;
+      border: none;
+      padding: 14px;
+      border-radius: 10px;
+      background: var(--primary);
+      color: white;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.2s;
+      margin-top: 8px;
+    }
+
+    .submit-btn:hover {
+      background: var(--primary-dark);
+    }
+
+    .submit-btn:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
+    }
+
+    /* ---------- MESSAGE ---------- */
+
+    .message {
+      display: none;
+      margin-top: 18px;
+      padding: 14px;
+      border-radius: 9px;
+      font-size: 14px;
+      text-align: center;
+    }
+
+    .success {
+      background: #ECFDF3;
+      color: var(--success);
+    }
+
+    .error {
+      background: #FEF2F2;
+      color: var(--danger);
+    }
+
+    /* ---------- FOOTER ---------- */
+
+    .footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 22px;
+      line-height: 1.6;
+    }
+
+    /* ---------- MOBILE ---------- */
+
+    @media (max-width: 600px) {
+
+      body {
+        padding: 20px 12px;
+      }
+
+      .card {
+        padding: 22px 18px;
+        border-radius: 14px;
+      }
+
+      .company-name {
+        font-size: 23px;
+      }
+
+      .form-heading h1 {
+        font-size: 23px;
+      }
+
+      .two-column {
+        grid-template-columns: 1fr;
+        gap: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="page">
+
+    <!-- =========================
+         COMPANY BRANDING
+    ========================== -->
+
+    <div class="brand">
+
+      <img
+        id="companyLogo"
+        class="logo"
+        src=""
+        alt="Company Logo"
+      />
+
+      <div id="companyName" class="company-name">
+        Your Company Name
+      </div>
+
+      <div id="tagline" class="tagline">
+        Quality Service, Every Time
+      </div>
+
+      <div class="contact-buttons">
+
+        <a id="callButton" class="contact-btn" href="#">
+          📞 Call
+        </a>
+
+        <a id="whatsappButton" class="contact-btn" href="#" target="_blank">
+          💬 WhatsApp
+        </a>
+
+      </div>
+
+    </div>
+
+
+    <!-- =========================
+         BOOKING CARD
+    ========================== -->
+
+    <div class="card">
+
+      <div class="form-heading">
+
+        <h1>Book a Service</h1>
+
+        <p>
+          Get your appliance serviced easily
+        </p>
+
+      </div>
+
+
+      <!-- =========================
+           BOOKING FORM
+      ========================== -->
+
+      <form id="bookingForm">
+
+
+        <!-- Customer Name -->
+
+        <div class="form-group">
+
+          <label>
+            Customer Name <span class="required">*</span>
+          </label>
+
+          <input
+            type="text"
+            name="customerName"
+            placeholder="Enter your full name"
+            required
+          />
+
+        </div>
+
+
+        <!-- Phone -->
+
+        <div class="form-group">
+
+          <label>
+            Phone Number <span class="required">*</span>
+          </label>
+
+          <input
+            type="tel"
+            name="phone"
+            placeholder="Enter mobile number"
+            pattern="[0-9]{10}"
+            maxlength="10"
+            required
+          />
+
+        </div>
+
+
+        <!-- Email -->
+
+        <div class="form-group">
+
+          <label>
+            Email <span class="required">*</span>
+          </label>
+
+          <input
+            type="email"
+            name="email"
+            placeholder="Enter email address"
+            required
+          />
+
+        </div>
+
+
+        <!-- Service -->
+
+        <div class="form-group">
+
+          <label>
+            Service <span class="required">*</span>
+          </label>
+
+          <select name="service" id="service" required>
+
+            <option value="">
+              Select a service
+            </option>
+
+          </select>
+
+        </div>
+
+
+        <!-- Address -->
+
+        <div class="form-group">
+
+          <label>
+            Service Address <span class="required">*</span>
+          </label>
+
+          <textarea
+            name="serviceAddress"
+            placeholder="Enter complete service address"
+            required
+          ></textarea>
+
+        </div>
+
+
+        <!-- Date + Time -->
+
+        <div class="two-column">
+
+          <div class="form-group">
+
+            <label>
+              Preferred Date <span class="required">*</span>
+            </label>
+
+            <input
+              type="date"
+              name="preferredDate"
+              id="preferredDate"
+              required
+            />
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label>
+              Preferred Time <span class="required">*</span>
+            </label>
+
+            <input
+              type="time"
+              name="preferredTime"
+              required
+            />
+
+          </div>
+
+        </div>
+
+
+        <!-- Problem Details -->
+
+        <div class="form-group">
+
+          <label>
+            Problem Details
+          </label>
+
+          <textarea
+            name="problemDetails"
+            placeholder="Tell us about the problem (optional)"
+          ></textarea>
+
+        </div>
+
+
+        <!-- Problem Photo -->
+
+        <div class="form-group">
+
+          <label>
+            Problem Photo
+          </label>
+
+          <input
+            type="file"
+            name="problemPhoto"
+            accept="image/*"
+          />
+
+        </div>
+
+
+        <!-- Additional Notes -->
+
+        <div class="form-group">
+
+          <label>
+            Additional Notes
+          </label>
+
+          <textarea
+            name="additionalNotes"
+            placeholder="Anything else we should know? (optional)"
+          ></textarea>
+
+        </div>
+
+
+        <!-- Submit -->
+
+        <button
+          type="submit"
+          class="submit-btn"
+          id="submitButton"
+        >
+          Book Service
+        </button>
+
+
+        <!-- Message -->
+
+        <div
+          id="message"
+          class="message"
+        ></div>
+
+      </form>
+
+    </div>
+
+
+    <!-- =========================
+         FOOTER
+    ========================== -->
+
+    <div class="footer">
+
+      <div>
+        Quality Service, Every Time
+      </div>
+
+      <div>
+        Trusted service for your home appliances.
+      </div>
+
+      <div>
+        © 2026 <span id="footerCompanyName"></span>
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <script>
+
+    /* ==================================================
+       CUSTOMIZATION SETTINGS
+       Change only this section for a new client
+    ================================================== */
+
+    const CONFIG = {
+
+      companyName: "Your Company Name",
+
+      logoUrl: "",
+
+      phone: "+91XXXXXXXXXX",
+
+      whatsapp: "91XXXXXXXXXX",
+
+      tagline: "Quality Service, Every Time",
+
+      primaryColor: "#1769E0",
+
+      webhookUrl: "",
+
+      services: [
+        "AC",
+        "Refrigerator / Fridge",
+        "Washing Machine",
+        "Water Purifier / RO",
+        "Microwave Oven",
+        "Geyser",
+        "TV",
+        "Chimney"
+      ]
+
+    };
+
+
+    /* ==================================================
+       APPLY COMPANY SETTINGS
+    ================================================== */
+
+    document.getElementById("companyName").textContent =
+      CONFIG.companyName;
+
+    document.getElementById("footerCompanyName").textContent =
+      CONFIG.companyName;
+
+    document.getElementById("tagline").textContent =
+      CONFIG.tagline;
+
+
+    /* Logo */
+
+    const logo = document.getElementById("companyLogo");
+
+    if (CONFIG.logoUrl) {
+
+      logo.src = CONFIG.logoUrl;
+
+    } else {
+
+      logo.style.display = "none";
+
+    }
+
+
+    /* Primary Color */
+
+    document.documentElement.style.setProperty(
+      "--primary",
+      CONFIG.primaryColor
+    );
+
+
+    /* Call */
+
+    const callButton =
+      document.getElementById("callButton");
+
+    callButton.href =
+      "tel:" + CONFIG.phone;
+
+
+    /* WhatsApp */
+
+    const whatsappButton =
+      document.getElementById("whatsappButton");
+
+    whatsappButton.href =
+      "https://wa.me/" +
+      CONFIG.whatsapp;
+
+
+    /* ==================================================
+       SERVICE DROPDOWN
+    ================================================== */
+
+    const serviceSelect =
+      document.getElementById("service");
+
+    CONFIG.services.forEach(function(service) {
+
+      const option =
+        document.createElement("option");
+
+      option.value = service;
+
+      option.textContent = service;
+
+      serviceSelect.appendChild(option);
+
+    });
+
+
+    /* ==================================================
+       DATE
+       Prevent selecting past dates
+    ================================================== */
+
+    const today =
+      new Date().toISOString().split("T")[0];
+
+    document.getElementById("preferredDate").min =
+      today;
+
+
+    /* ==================================================
+       FORM SUBMISSION
+    ================================================== */
+
+    const form =
+      document.getElementById("bookingForm");
+
+    const submitButton =
+      document.getElementById("submitButton");
+
+    const message =
+      document.getElementById("message");
+
+
+    form.addEventListener("submit", async function(event) {
+
+      event.preventDefault();
+
+
+      /* Basic validation */
+
+      if (!form.checkValidity()) {
+
+        form.reportValidity();
+
+        return;
+
+      }
+
+
+      submitButton.disabled = true;
+
+      submitButton.textContent =
+        "Submitting...";
+
+
+      /* Collect form data */
+
+      const formData =
+        new FormData(form);
+
+
+      try {
+
+
+        /* ============================================
+           n8n WEBHOOK
+           ============================================ */
+
+        if (CONFIG.webhookUrl) {
+
+          const response =
+            await fetch(
+              CONFIG.webhookUrl,
+              {
+                method: "POST",
+                body: formData
+              }
+            );
+
+
+          if (!response.ok) {
+
+            throw new Error(
+              "Submission failed"
+            );
+
+          }
+
+        }
+
+
+        /* ============================================
+           SUCCESS
+           ============================================ */
+
+        message.className =
+          "message success";
+
+        message.style.display =
+          "block";
+
+        message.textContent =
+          "Booking submitted successfully! Our team will contact you shortly.";
+
+        form.reset();
+
+
+      } catch (error) {
+
+
+        /* ============================================
+           ERROR
+           ============================================ */
+
+        message.className =
+          "message error";
+
+        message.style.display =
+          "block";
+
+        message.textContent =
+          "Something went wrong. Please try again or call us.";
+
+      }
+
+
+      submitButton.disabled = false;
+
+      submitButton.textContent =
+        "Book Service";
+
+    });
+
+  </script>
+
+</body>
+</html>
